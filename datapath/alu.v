@@ -5,20 +5,22 @@
  */
 
 module alu(
-  input       [3:0]   ctl,
-  input       [31:0]  a, b,
-  output reg  [31:0]  out//,
+  input  wire [3:0]   ctl,
+  input  wire [31:0]  a, b,
+  output reg  [31:0]  out,
+  output reg  zero // Used by BEQ. If a==b, then zero = 1'b0.
   // output wire overflow
 );
 
-  always @(*) begin
+  always @(a or b or ctl) begin
     case (ctl)
       4'd0: out <= a + b; // add
       4'd1: out <= a - b; // sub
-      4'd2: out <= a & b;  // and
-      4'd3: out <= a | b;  // or
-      // 4'd4: out ;
+      4'd2: out <= a & b; // and
+      4'd3: out <= a | b; // or
+      4'd4: out <= a ^ b; // xor
     endcase
+    zero <= a == b;
   end
 
 endmodule
