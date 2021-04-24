@@ -48,6 +48,10 @@ Description: Instruction memory of 1KB size
 - Inputs: `addr` [7:0] The specified address
 - Outputs: `out` [31:0] The instruction at the given memory address
 
+#### dm.v
+Module name: dm
+Description: Data memory of 1KB size
+
 #### pc.v
 Module name: pc
 Description: Program counter
