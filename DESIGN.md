@@ -48,6 +48,19 @@ Description: Instruction memory of 1KB size
 - Inputs: `addr` [7:0] The specified address
 - Outputs: `out` [31:0] The instruction at the given memory address
 
+#### pc.v
+Module name: pc
+Description: Program counter
+- Inputs: ``
+
+#### npc.v
+Module name: npc
+Description: Next Program Counter calculator
+
+#### gpr.v
+Module name: gpr
+Description: Grouped Registers
+
 ### /control
 #### ctrl.v
 
