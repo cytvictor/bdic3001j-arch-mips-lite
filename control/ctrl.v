@@ -34,6 +34,7 @@ module ctrl (
                     beq ? 4'd4 :
                     addu ? 4'd0 :
                     subu ? 4'd1 :
-                    4'd3; // ori || lui
+                    ori ? 4'd3:
+                    4'd5; // lui
 
 endmodule

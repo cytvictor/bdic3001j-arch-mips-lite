@@ -3,9 +3,9 @@ Module: Computer Architectures
 Author: Yongting Chen (UCD #18206357)
 
 ## Address space
-RAM: 0x0000_0000 ~ 0x0000_2FFF
-ROM: 0x0000_3000 ~ 0x0000_4FFF
-BUS: 0x0000_7800 ~ 0x0000_7FFF
+<!-- RAM: 0x0000_0000 ~ 0x0000_2FFF -->
+<!-- ROM: 0x0000_3000 ~ 0x0000_4FFF -->
+<!-- BUS: 0x0000_7800 ~ 0x0000_7FFF -->
 
 ## Directory structure
 mips-processor

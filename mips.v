@@ -1,6 +1,6 @@
 /**
  * MIPS - Single-cycle CPU main module.
- * Supported instructions: addu, ori,
+ * Supported instructions: addu, subu, ori, lui
  * @module_name mips
  * @author Yongting Chen <yongting.chen@ucdconnect.ie>
  */

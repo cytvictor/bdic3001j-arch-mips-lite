@@ -19,6 +19,7 @@ module alu(
       4'd2: out <= a & b; // and
       4'd3: out <= a | b; // or
       4'd4: out <= a ^ b; // xor
+      4'd5: out <= {b[15:0], 16'b0}; // lui
     endcase
     zero <= a == b;
   end
