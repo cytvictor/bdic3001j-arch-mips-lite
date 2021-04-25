@@ -1,10 +1,13 @@
 # MIPS-Processor-Lite
 *Work In Progress*
+
 Module: BDIC3001J Computer Architectures
+
 Implemented: addu, subu, ori, lui, lw, sw, beq, j
 
 ## Address space
 RAM: 0x0000_0000 ~ 0x0000_0FFF
+
 ROM: 0x0000_3000 ~ 0x0000_3FFF
 
 ## Directory structure
