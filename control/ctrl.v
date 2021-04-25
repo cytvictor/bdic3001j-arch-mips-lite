@@ -6,7 +6,8 @@
 
 module ctrl (
   input wire [31:0] instruction,
-  output wire reg_dst, reg_write, alu_src, mem_read, mem_write, npc_jmp,
+  output wire reg_dst, reg_write, alu_src, mem_read, mem_write,
+  output wire [1:0] npc_jmp,
   output wire [3:0] alu_ctl
 );
   wire [5:0] opcode, funct;
@@ -29,7 +30,9 @@ module ctrl (
   assign mem_read = lw;
   assign mem_write = sw;
   assign reg_write = addu || subu || ori || lw || lui;
-  assign npc_jmp = beq;
+  assign npc_jmp =  beq ? 2'b01 :
+                    j ? 2'b10 :
+                    2'b00;
   assign alu_ctl =  lw || sw ? 4'd0 :
                     beq ? 4'd4 :
                     addu ? 4'd0 :

@@ -1,6 +1,6 @@
 /**
  * MIPS - Single-cycle CPU main module.
- * Supported instructions: addu, subu, ori, lui, sw, lw
+ * Supported instructions: addu, subu, ori, lui, sw, lw, beq, j
  * @module_name mips
  * @author Yongting Chen <yongting.chen@ucdconnect.ie>
  */
@@ -28,7 +28,7 @@ module mips (
 
   // PC and NPC
   wire [31:0] PC_ADDR, PC_NEXT_ADDR, PC_IMM_ADDR_OFFSET;
-  assign PC_IMM_ADDR_OFFSET = IM_DATA_IMM16;
+  assign PC_IMM_ADDR_OFFSET = IM_DATA_INSTR_INDEX;
   pc pc_(clk, rst, PC_NEXT_ADDR, PC_ADDR);
   npc npc_(PC_ADDR, CTRL_NPC_JMP, PC_IMM_ADDR_OFFSET, PC_NEXT_ADDR);
 
@@ -41,10 +41,12 @@ module mips (
   wire [4:0] IM_DATA_RT = IM_DATA[20:16];
   wire [4:0] IM_DATA_RD = IM_DATA[15:11];
   wire [15:0] IM_DATA_IMM16 = IM_DATA[15:0];
+  wire [25:0] IM_DATA_INSTR_INDEX = IM_DATA[25:0];
   im im_(IM_ADDR, IM_DATA);
 
   // CTRL
-  wire CTRL_REG_DST, CTRL_REG_WRITE, CTRL_ALU_SRC, CTRL_MEM_READ, CTRL_MEM_WRITE, CTRL_NPC_JMP;
+  wire CTRL_REG_DST, CTRL_REG_WRITE, CTRL_ALU_SRC, CTRL_MEM_READ, CTRL_MEM_WRITE;
+  wire [1:0] CTRL_NPC_JMP;
   ctrl ctrl_(IM_DATA, CTRL_REG_DST, CTRL_REG_WRITE, CTRL_ALU_SRC, CTRL_MEM_READ, CTRL_MEM_WRITE, CTRL_NPC_JMP, ALU_CTL);
 
   // GPR
