@@ -29,7 +29,7 @@ module ctrl (
   assign mem_read = lw;
   assign mem_write = sw;
   assign reg_write = addu || subu || ori || lw || lui;
-  assign npc_sel = !j;
+  assign npc_jmp = beq;
   assign alu_ctl =  lw || sw ? 4'd0 :
                     beq ? 4'd4 :
                     addu ? 4'd0 :

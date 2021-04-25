@@ -27,14 +27,16 @@ module mips (
   alu alu_(ALU_CTL, ALU_IN_A, ALU_IN_B, ALU_OUT, ALU_ZERO_OUT);
 
   // PC and NPC
-  wire [31:0] PC_ADDR, PC_NEXT_ADDR;
+  wire [31:0] PC_ADDR, PC_NEXT_ADDR, PC_IMM_ADDR_OFFSET;
+  assign PC_IMM_ADDR_OFFSET = IM_DATA_IMM16;
   pc pc_(clk, rst, PC_NEXT_ADDR, PC_ADDR);
-  npc npc_(PC_ADDR, PC_NEXT_ADDR);
+  npc npc_(PC_ADDR, CTRL_NPC_JMP, PC_IMM_ADDR_OFFSET, PC_NEXT_ADDR);
 
   // shift PC from 0000_3000 to 0000_0000 for `im`
   wire [31:0] PC_ADDR_FOR_IM = PC_ADDR - 32'h0000_3000;
   wire [7:0]  IM_ADDR = PC_ADDR_FOR_IM / 4;
   wire [31:0] IM_DATA;
+  // define some wires for further easy reference
   wire [4:0] IM_DATA_RS = IM_DATA[25:21];
   wire [4:0] IM_DATA_RT = IM_DATA[20:16];
   wire [4:0] IM_DATA_RD = IM_DATA[15:11];
