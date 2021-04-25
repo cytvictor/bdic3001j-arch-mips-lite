@@ -14,6 +14,19 @@ module gpr_testbench ();
     reg_read2 = 0;
     #100 begin
       rst = 0;
+      SIG_RF_W = 1;
+      reg_write = 5'b00001;
+      data_write = 32'h0000_0233;
+    end
+    #100 begin
+      SIG_RF_W = 1;
+      reg_write = 5'b00000;
+      data_write = 32'h0000_0233;
+    end
+    #100 begin
+      SIG_RF_W = 0;
+      reg_read1 = 5'b00001;
+      reg_read2 = 5'b00000;
     end
   end
 

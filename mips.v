@@ -30,7 +30,7 @@ module mips (
   wire [31:0] PC_ADDR, PC_NEXT_ADDR, PC_IMM_ADDR_OFFSET;
   assign PC_IMM_ADDR_OFFSET = IM_DATA_INSTR_INDEX;
   pc pc_(clk, rst, PC_NEXT_ADDR, PC_ADDR);
-  npc npc_(PC_ADDR, CTRL_NPC_JMP, PC_IMM_ADDR_OFFSET, PC_NEXT_ADDR);
+  npc npc_(PC_ADDR, CTRL_NPC_JMP, PC_IMM_ADDR_OFFSET, ALU_ZERO_OUT, PC_NEXT_ADDR);
 
   // shift PC from 0000_3000 to 0000_0000 for `im`
   wire [31:0] PC_ADDR_FOR_IM = PC_ADDR - 32'h0000_3000;
@@ -50,15 +50,16 @@ module mips (
   ctrl ctrl_(IM_DATA, CTRL_REG_DST, CTRL_REG_WRITE, CTRL_ALU_SRC, CTRL_MEM_READ, CTRL_MEM_WRITE, CTRL_NPC_JMP, ALU_CTL);
 
   // GPR
-  wire [31:0] GPR_RD1, GPR_RD2;
+  wire [31:0] GPR_RD1, GPR_RD2, GPR_DATA_WRITE;
   wire [4:0] GPR_ADDR_WRITE_IN1;
   wire [4:0] GPR_ADDR_READ_IN1 = IM_DATA_RS;
   wire [4:0] GPR_ADDR_READ_IN2 = IM_DATA_RT;
   assign ALU_IN_A = GPR_RD1;
-  gpr gpr_(clk, rst, CTRL_REG_WRITE, GPR_ADDR_READ_IN1, GPR_ADDR_READ_IN2, GPR_ADDR_WRITE_IN1, ALU_OUT, GPR_RD1, GPR_RD2);
+  gpr gpr_(clk, rst, CTRL_REG_WRITE, GPR_ADDR_READ_IN1, GPR_ADDR_READ_IN2, GPR_ADDR_WRITE_IN1, GPR_DATA_WRITE, GPR_RD1, GPR_RD2);
 
   // Multiplex GPR Inputs (Those reg addrs to read and to write differs by instruction)
   mux2 mux2_2(IM_DATA_RT, IM_DATA_RD, CTRL_REG_DST, GPR_ADDR_WRITE_IN1);
+  mux2 mux2_3(ALU_OUT, DM_READ_DATA, CTRL_MEM_READ, GPR_DATA_WRITE);
   // mux2 mux2_3(0'b00000, IM_DATA_RT, CTRL_REG_DST, GPR_ADDR_READ_IN2);
 
   // Multiplex ALU input b (either rd or extended immediate number)

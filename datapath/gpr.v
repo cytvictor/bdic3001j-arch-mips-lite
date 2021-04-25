@@ -19,8 +19,12 @@ module gpr (
         reg_file[n] <= 32'b0;
       end
     end else begin
-      if (write_enable) begin
+      if (write_enable && addr_write_in != 5'b00000) begin
         reg_file[addr_write_in][31:0] <= data_write;
+        $display("Write %h with %h", addr_write_in, data_write);
+        for (n = 0; n < 32; n = n + 1) begin
+          $display("%h reg_data is %h", n, reg_file[n]);
+        end
       end
     end
   end
