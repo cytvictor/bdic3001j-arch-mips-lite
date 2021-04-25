@@ -25,15 +25,15 @@ module ctrl (
 
   // generate control signals
   assign reg_dst = addu || subu; // R-type needs reg-dst
-  assign alu_src = sw || lw;
+  assign alu_src = sw || lw || ori || lui || j;
   assign mem_to_reg = lw;
-  assign reg_write = addu || subu || lw;
   assign mem_write = sw;
+  assign reg_write = addu || subu || ori || lw || lui;
   assign npc_sel = !j;
-  assign alu_sel = lw || sw ? 4'd0 :
-                   beq ? 4'd4 :
-                   addu ? 4'd0 :
-                   subu ? 4'd1 :
-                   ori || lui ? 4'd3;
+  assign alu_ctl =  lw || sw ? 4'd0 :
+                    beq ? 4'd4 :
+                    addu ? 4'd0 :
+                    subu ? 4'd1 :
+                    4'd3; // ori || lui
 
 endmodule

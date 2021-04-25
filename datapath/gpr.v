@@ -6,7 +6,7 @@
 module gpr (
   input wire clk, rst,
   input wire write_enable,
-  input wire [4:0] addr_read_in1, addr_read_in2, addr_write_in, // 5 bits
+  input wire [4:0] addr_read_in1, addr_read_in2, addr_write_in, // 5 bits in MIPS instruction
   input wire [31:0] data_write,
   output wire [31:0] data_read_out1, data_read_out2
 );
