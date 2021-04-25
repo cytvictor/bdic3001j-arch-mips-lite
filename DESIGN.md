@@ -1,13 +1,14 @@
 # MIPS-Processor-Lite
-Module: Computer Architectures
-Author: Yongting Chen (UCD #18206357)
+*Work In Progress*
+Module: BDIC3001J Computer Architectures
+Implemented: addu, subu, ori, lui, lw, sw, beq, j
 
 ## Address space
-<!-- RAM: 0x0000_0000 ~ 0x0000_2FFF -->
-<!-- ROM: 0x0000_3000 ~ 0x0000_4FFF -->
-<!-- BUS: 0x0000_7800 ~ 0x0000_7FFF -->
+RAM: 0x0000_0000 ~ 0x0000_0FFF
+ROM: 0x0000_3000 ~ 0x0000_3FFF
 
 ## Directory structure
+```
 mips-processor
   |- control
       |- ctrl.v ()
@@ -22,9 +23,17 @@ mips-processor
   |- test_cpu.v (The testbench module)
   |- code.asm (Assembly code of the program)
   |- code.txt (MARS dumped hexadecimal program text, converted from dump.txt)
+```
 
 ## Design Detail
 The PC increment will be triggered **posedege**.
+
+### /
+#### mips.v
+Main CPU program.
+
+#### mips_testbench.v
+Entry point of tb.
 
 ### /datapath
 #### alu.v
@@ -65,7 +74,11 @@ Description: Next Program Counter calculator
 Module name: gpr
 Description: Grouped Registers
 
+#### mux.v
+Module name: mux
+Description: Multiplexer of parameterized width
+
 ### /control
 #### ctrl.v
-
-#### test_cpu.v
+Module name: ctrl
+Description: CPU signal controls
