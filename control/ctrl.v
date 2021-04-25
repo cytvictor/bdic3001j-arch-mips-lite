@@ -6,7 +6,7 @@
 
 module ctrl (
   input wire [31:0] instruction,
-  output wire reg_dst, reg_write, alu_src, mem_to_reg, mem_read, mem_write, npc_jmp,
+  output wire reg_dst, reg_write, alu_src, mem_read, mem_write, npc_jmp,
   output wire [3:0] alu_ctl
 );
   wire [5:0] opcode, funct;
@@ -26,7 +26,7 @@ module ctrl (
   // generate control signals
   assign reg_dst = addu || subu; // R-type needs reg-dst
   assign alu_src = sw || lw || ori || lui || j;
-  assign mem_to_reg = lw;
+  assign mem_read = lw;
   assign mem_write = sw;
   assign reg_write = addu || subu || ori || lw || lui;
   assign npc_sel = !j;
